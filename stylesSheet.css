@@ -1,0 +1,663 @@
+html, body {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    height: 100%;
+    margin: 0;
+}
+#header-logo {
+    margin: 5px;
+    width:50px;
+    height:50px;
+}
+.header-cart {
+    flex: 1;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-right: 15px;
+}
+.header-a {
+    color: #272727;
+    font-size: 20px;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    margin: 0px 10px;
+    position: relative;
+    transition: all .5s
+}
+
+.header-a:hover {
+    background-color: #fdc4b6;
+    color:white;
+  }
+  
+.header-a:before {
+    content: "";
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    width: 12px;
+    height: 12px;
+    border: 3px solid #fdc4b6;
+    border-width: 0 0 3px 3px;
+    opacity: 0;
+    transition: all 0.3s
+  }
+  
+.header-a:hover:before {
+    opacity: 1;
+    bottom: -8px;
+    left: -8px;
+  }
+  
+.header-a:after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 12px;
+    height: 12px;
+    border: 3px solid #fdc4b6;
+    border-width: 3px 3px 0 0;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+  
+  a:hover:after {
+    opacity: 1;
+    top: -8px;
+    right: -8px;
+  }
+.parallax {
+    /* The image used */
+    background-image: url("./img/banner.jpg");
+  
+    /* Set a specific height */
+    min-height: 500px; 
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .parallax-2 {
+    /* The image used */
+    background-image: url("./img/cov.jpg");
+  
+    /* Set a specific height */
+    min-height: 500px; 
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+#about-us {
+    margin: 0 auto;
+    width: 50%;
+}
+#footer-link {
+    margin:auto;
+}
+
+.page-title {
+    background-color: #222;
+    color: white;
+    padding: 25px;
+    text-align: left;
+}
+
+.order-container {
+    margin: 0 auto;
+    width:50%;
+    padding: 65px;
+}
+
+.item-header {
+    margin: 0;
+    padding: 5px
+}
+
+.create-account-container {
+    border-color: #eb5757;
+    border-style: solid;
+    border-radius: 25px;
+    margin: auto;
+    width: 40%;
+    margin: 25px auto;
+}
+
+.log-in-container {
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin: auto;
+    width: 40%;
+    margin: 25px auto;
+}
+
+.small-border {
+    border-color: #eb5757;
+    border-style: solid;
+    border-radius: 25px;
+    width: 50%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.address {
+    width: 80%;
+    margin: auto;
+
+}
+
+.address-paragraph {
+    margin: 0 0 10px 0;
+}
+
+.address-duo {
+    width: 50%;
+    display: inline-block;
+
+}
+
+.container-address {
+    margin: auto;
+}
+
+.items-order {
+    border: 1px solid #e6e6e6;
+}
+
+.address-input {
+    height: 20px;
+    width: 80%;
+}
+
+.order-sum {
+    border-color: #eb5757;
+    border-style: solid;
+    border-radius: 25px;
+    width: 80%;
+    margin: 50px auto;
+    padding: 10px;
+
+}
+
+.checkout-wrapper {
+    border-color: #eb5757;
+    border-style: solid;
+    border-radius: 25px;
+    width: 80%;
+    margin: 25px auto;
+}
+
+.item-image-address {
+    display: inline-block;
+    margin: 25px auto 0 15px;
+}
+
+.item-name {
+    display: inline-block;
+    margin: 0 15px 0 auto;
+}
+
+.item-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Adjust as needed */
+}
+
+.address-container {
+
+    width: 50%;
+    margin: 50px auto; /* Optional: Add some space between the divs */
+}
+
+
+#logo-text {
+    color:#272727;
+    margin:auto;
+}
+
+#button {
+    color:white;
+    padding: 5px 25px 5px 25px;
+    border-radius: 5px;
+    background-color: transparent;
+    outline-style: solid;
+    outline-width: thin;
+    outline-color: white;
+    border-style: none;
+}
+#button:hover {
+    background-color: #C1E1C1;
+    color: white;
+  }
+
+.support-container {
+    display: flex;
+    width: 95%;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
+
+.support-icons {
+    display: flex;
+}
+
+.support-column {
+    flex: 1; /* This makes each box take equal width */
+    width: 30%;
+    min-height: 200px;
+    color: #f9f9f9;
+
+}
+
+
+.support-paragraph {
+    color: black;
+    margin: 80px 50px;
+}
+
+.support {
+    margin: 10% 0 0 10%;
+}
+
+.support-row {
+    background-color: #222;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 50px 5px;
+    height: 60vh;
+
+}
+
+.support-img-container {
+    position: relative;
+    width: 100%; /* adjust width as needed */
+    height: 30vh; /* adjust height as needed */
+    bottom: 0;
+}
+
+.support-img {
+    position: absolute;
+    bottom: -100px;
+    right: -40px; /* adjust as needed to position it outside */
+    max-width: none; /* to prevent max-width from constraining the image */
+    max-height: 100%;
+    border-radius: 50%;
+}
+
+.support-text {
+    text-align: center;
+}
+
+.support-header {
+    flex: 1;
+}
+
+#button {
+    background-color: transparent;
+}
+
+
+.button {
+  border: none;
+  padding: 12px 40px;
+  background-color: #eb5757;
+  color: white;
+  font-family: 'BenchNine';
+  font-size: 22px;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+}
+
+.button:before {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: -5px;
+  left: -5px;
+  border-top: 2px solid #eb5757;
+  border-left: 2px solid #eb5757;
+  transition: all 0.25s;
+}
+
+.button:hover:before,
+.button:hover:after {
+  height: 100%;
+  width: 100%;
+}
+
+.button:after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  bottom: -5px;
+  right: -5px;
+  border-bottom: 2px solid #eb5757;
+  border-right: 2px solid #eb5757;
+  transition: all 0.25s;
+}
+
+.shop-top-wrapper {
+    text-align: left;
+    padding-left: 25px;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    background-color: #eb5757;
+}
+
+.grid-child {
+    padding: 20px;
+    text-align: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust 200px to your desired width */
+    gap: 20px; /* Adjust gap between grid items */
+    width: 800px; /* Set the width of the grid container */
+    margin: 0 auto; /* Center the grid container */
+}
+
+.checkout-grid {
+    border-color: #eb5757;
+    border-style: solid;
+    border-radius: 25px;
+    margin: 50px;
+}
+.item-image {
+    padding: 5px 5px 5px 5px;
+    border-radius: 10px;
+    outline-style: solid;
+    outline-width: thin;
+    outline-color: white;
+    border-style: none;
+}
+
+
+.container {
+	position: relative;
+	overflow: hidden;
+}
+
+.animation-image {
+	width: 100%;
+	transition: all .5s;
+}
+
+.caption {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	transition: all 0.5s;
+	background-color: #eb5757;
+	transform: translateY(100%);
+}
+
+.caption h1 {
+	text-transform: uppercase;
+	margin: 0;
+}
+
+
+.container:hover .caption {
+	transform: translateY(0);
+}
+
+.container:hover img {
+	transform: translateY(-30%);
+}
+
+.local-shop-container {
+    margin: 50px 50px 0 50px
+}
+
+.local-shop-left {
+    position: absolute;
+    margin-top: 50px;
+}
+
+#shop-img {
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.local-shop-right-wrapper {
+    padding: 145px 150px 145px 400px
+}
+
+.local-shop-right {
+    z-index: -1;
+    width: 80%;
+    margin-left: auto;
+    margin-right: 0px;
+    right: 0; /* Align the div to the right */
+    /* You can set additional styles for the div as needed */
+    background-color: #222;
+    border-radius: 5px;
+    color: white;
+    height: 600px;
+    background-size: cover;
+}
+
+.local-shop-wrapper {
+    text-align: center;
+    position: relative;
+    width: 100%; /* Set the width of the container */
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.header-div {
+    margin: 0;
+    position: absolute;
+    padding: 15px;
+}
+
+.content {
+    min-height: 100%;
+}
+
+.content-inside {
+    padding: 0;
+    padding-bottom: 50px;
+}
+
+.footer {
+    background-color: #222;
+    height: 250px;
+    margin-top: 50px;
+    position: relative;
+}
+
+.footer-container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    padding: 10px;
+}
+
+#footer-icon {
+    width:50px;
+    height:50px;
+    margin: 5px;
+}
+
+.footer-icons {
+    position: absolute; /* Set position to absolute */
+    top: 30%; /* Align to the top of the container */
+    right: 0; /* Align to the right side of the container */
+    margin: auto 0;
+    display: inline-block;
+}
+
+.footer-img {
+    margin: 0 8px;
+}
+
+.cart-nav-wrapper {
+    text-align: center;
+}
+
+.cart-nav {
+    padding: 10px;
+    margin: auto;
+    display: inline-block;
+}
+
+.center {
+    text-align: center;
+}
+
+.block-header  {
+    padding: 4px 20px;
+}
+
+.header-order {
+    padding: 10px 0;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkout-img {
+    padding: 20px
+}
+
+.order-item-chekcout {
+    display: flex;
+    justify-content: space-between; /* Distributes equal space between items */
+    align-items: center; /* Vertically centers items if necessary */
+
+}
+
+.cart-image-wrapper {
+    padding: 5px;
+}
+
+.error-background {
+    background-color:#222;
+    width:100%;
+    height:100%;
+    text-align: center;
+
+}
+.error-image {
+    position: relative;
+    top: 25%;
+}
+
+.header-error {
+    color:white;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    #logo-text {
+        display: none;
+    }
+    #shop-img {
+        display: none;
+    }
+    
+    .grid-child {
+        font-size: 12.5px;
+        padding-left: 80px;
+        padding-right: 80px;
+        
+    }
+
+    .support-container {
+        margin: 5vh 0;
+        font-size: 10px;
+    }
+    .support-text {
+        font-size: 15px;
+    }
+
+    .support-row {
+        background-color: #222;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 5px 50px 5px;
+        height: 20vh;
+    }
+
+    .support-column {
+        flex: 1; /* This makes each box take equal width */
+        width: 30%;
+        min-height: 200px;
+        color: #f9f9f9;
+        display: inline;
+
+    }
+
+    .support-img {
+        display: none;
+    }
+
+    .support-icons {
+        display: inline-block;
+    }
+
+    .grid-container {
+        display: inline;
+        grid-template-columns: 1fr; /* Adjust 200px to your desired width */
+        gap: 20px; /* Adjust gap between grid items */
+        width: 100%; /* Set the width of the grid container */
+        margin: 0 auto; /* Center the grid container */
+    }
+    .local-shop-container {
+        font-size: 12.5px;
+    }
+    #logo-text {
+        display: none;
+    }
+    .local-shop-right-wrapper {
+        padding: 10px;
+    }
+    .local-shop-right {
+        width: 100%;
+    }
+    .order-container {
+        width: 80%;
+        padding: 0;
+    }
+    .footer-icons {
+        display: none;
+    }
+    #about-us {
+        width: 80%;
+    }
+
+}

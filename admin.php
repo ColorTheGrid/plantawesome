@@ -100,8 +100,8 @@ if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
                         $ItemDescription = $_POST['itemDescription'];
                         $ItemName = $_POST['itemName'];
                         $ItemPrice = $_POST['itemPrice'];
-                        $stmt = $pdo->prepare("INSERT INTO item (itemName, itemDescription, itemPrice, itemImg) VALUES (?,?,?,?)");
-                        $stmt->execute([htmlspecialchars($ItemName), htmlspecialchars($ItemDescription), htmlspecialchars($ItemPrice), htmlspecialchars($target_file)]);
+                        $stmt = $pdo->prepare("INSERT INTO item (stock, itemName, itemDescription, itemPrice, itemImg) VALUES (?,?,?,?,?)");
+                        $stmt->execute([1, htmlspecialchars($ItemName), htmlspecialchars($ItemDescription), htmlspecialchars($ItemPrice), htmlspecialchars($target_file)]);
                     }
                     header("Location: success.php");
                 } else {

@@ -1,32 +1,21 @@
 <?php
 session_start();
 include 'config.php';
-if ($_SESSION['cart'] && $_SESSION['UserId']) {
-    global $pdo;
-    $stmt = $pdo->prepare("SELECT userId FROM useraddress WHERE userId = ?");
-    $stmt->execute([htmlspecialchars($_SESSION['UserId'])]);
-    $data = $stmt->fetchAll();
+if ($_SESSION['cart'] && $_SESSION['UserId']) {   
 
-    if (!isset($data[0]['userId'])) {
-        $isEmpty = false;
-        foreach ($_POST as $key => $value) {
-            if ($value === "") {
-                $isEmpty = true;
-            }
-        }
-        if ($isEmpty === false) {
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $StreetName = $_POST['StreetName'];
-                $StreetNumber = $_POST['StreetNumber'];
-                $PostalCode = $_POST['PostalCode'];
-                $country = $_POST['country'];
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $StreetName = $_POST['StreetName'];
+            $StreetNumber = $_POST['StreetNumber'];
+            $PostalCode = $_POST['PostalCode'];
+            $country = $_POST['Country'];
 
-                $stmt = $pdo->prepare("INSERT INTO useraddress (userId, streetName, streetNumber, streetPostalCode, country) VALUES (?,?,?,?,?)");
-                $stmt->execute([htmlspecialchars($_SESSION['UserId']), htmlspecialchars($StreetName), htmlspecialchars($StreetNumber), htmlspecialchars($PostalCode), htmlspecialchars($country)]);
-                header("Location: finalise-order.php");
-            }
-        }
-        ?>
+            global $pdo;
+            $stmt = $pdo->prepare("INSERT INTO addresses (PostalCode , StreetNumber, StreetName, Country) VALUES (?.?.?.?)");
+            $stmt->execute([htmlspecialchars($_SESSION['UserId']), htmlspecialchars($PostalCode), htmlspecialchars($StreetNumber), htmlspecialchars($StreetName), htmlspecialchars($Country)]);
+            $stmt = $pdo->prepare("UPDATE user SET StreetNumber=?, PostalCode=?,  WHERE UserId=?");
+            $stmt->execute([htmlspecialchars($StreetNumber), htmlspecialchars($PostalCode), htmlspecialchars()]);
+            header("Location: finalise-order.php");
+ ?>
         <!DOCTYPE html>
         <html>
         <?php include 'head.php'?>
@@ -47,8 +36,8 @@ if ($_SESSION['cart'] && $_SESSION['UserId']) {
                             </div>
                             <div class="address">
                                 <p>
-                                    <label class="label" for="lname">Street name: </label><br>
-                                    <input type="text" class="address-input" id="lname" name="StreetName"><br>
+                                    <label class="label" for="lname">Postal Code: </label><br>
+                                    <input type="text" class="address-input" id="lname" name="PostalCode"><br>
                                 </p>
                             </div>
                             <div class="address">
@@ -59,14 +48,14 @@ if ($_SESSION['cart'] && $_SESSION['UserId']) {
                             </div>
                             <div class="address">
                                 <p>
-                                    <label class="label" for="lname">Postal code: </label><br>
-                                    <input type="text" class="address-input" id="lname" name="PostalCode"><br>
+                                    <label class="label" for="lname">Street name: </label><br>
+                                    <input type="text" class="address-input" id="lname" name="StreetName"><br>
                                 </p>
                             </div>
                             <div class="address">
                                 <p>
                                     <label class="label" for="lname">Country: </label><br>
-                                    <input type="text" class="address-input" id="lname" name="country"><br>
+                                    <input type="text" class="address-input" id="lname" name="Country"><br>
                                 </p>
                             </div>
                         </div>

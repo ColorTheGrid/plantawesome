@@ -2,18 +2,18 @@
 session_start();
 include 'config.php';
 global $pdo;
-$stmt = $pdo->prepare("SELECT * FROM item");
+$stmt = $pdo->prepare("SELECT * FROM items");
 $stmt->execute();
 $data = $stmt->fetchAll();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // collect value of input field
     if (!isset($_SESSION['cart'])) $_SESSION['cart'] = array();
-    $name = $_POST['button'];
-    if (empty($name)) {
+    $ButtonValue = $_POST['button'];
+    if (empty($ButtonValue)) {
         header("Location: error.php");
     } else {
-        array_push($_SESSION['cart'], $name);
+        array_push($_SESSION['cart'], $ButtonValue);
         header("Location: success.php");
     }
 }

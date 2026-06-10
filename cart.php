@@ -6,8 +6,8 @@ if ($_SESSION['cart']) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // collect value of input field
         if (!isset($_SESSION['cart'])) $_SESSION['cart'] = array();
-        $name = htmlspecialchars($_POST['button']);
-        if (empty($name)) {
+        $ButtonValue = htmlspecialchars($_POST['button']);
+        if (empty($ButtonValue)) {
             header("Location: address.php");
         } else {
             unset($_SESSION['cart']);

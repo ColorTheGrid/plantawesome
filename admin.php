@@ -5,12 +5,12 @@ include 'config.php';
 if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
     global $pdo;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $name = intval(htmlspecialchars($_POST['button']));
-        if ($name === -2) {
+        $ButtonValue = intval(htmlspecialchars($_POST['button']));
+        if ($ButtonValue === -2) {
             header("Location: admin-1.php");
         }
 
-        if ($name === -1) {
+        if ($ButtonValue === -1) {
             $hasValue = false;
             if (!empty($_POST['UserEmail']) && !empty($_POST['UserName']) && !empty($_POST['UserPassword'])) {
                 $UserEmail = $_POST['UserEmail'];
@@ -32,17 +32,17 @@ if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
                 }
             }
 
-        if ($name > 0) { 
+        if ($ButtonValue > 0) { 
                 $stmt = $pdo->prepare("SELECT stock FROM item Where Id = ?");
-                $stmt->execute([htmlspecialchars($name)]);
+                $stmt->execute([htmlspecialchars($ButtonValue)]);
                 $data = $stmt->fetch();
                 if($data['stock'] === 1 ) {
                     $stmt = $pdo->prepare("UPDATE item SET Stock = 0 WHERE Id = ?");
-                    $stmt->execute([htmlspecialchars($name)]);
+                    $stmt->execute([htmlspecialchars($ButtonValue)]);
     
                 } else {
                     $stmt = $pdo->prepare("UPDATE item SET Stock = 1 WHERE Id = ?");
-                    $stmt->execute([htmlspecialchars($name)]);
+                    $stmt->execute([htmlspecialchars($ButtonValue)]);
                 }
                 if($stmt)  {
                     header("Location: success.php");
@@ -53,7 +53,7 @@ if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
             }
         
         
-        if ($name === 0) {
+        if ($ButtonValue === 0) {
             $target_dir = "img/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;

@@ -5,9 +5,9 @@ include 'config.php';
 if (isset($_SESSION['UserId'])) {
     global $pdo;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $name = intval($_POST['button']);
+        $ButtonValue = intval($_POST['button']);
     
-        if ($name === 1) {
+        if ($ButtonValue === 1) {
             if (!empty($_POST['UserEmail']) && !empty($_POST['UserName']) && !empty($_POST['UserPassword'])) {
                 $UserEmail = $_POST['UserEmail'];
                 $UserName = $_POST['UserName'];
@@ -28,7 +28,7 @@ if (isset($_SESSION['UserId'])) {
             }
         }
 
-        if ($name === 0) {
+        if ($ButtonValue === 0) {
             if (!empty($_POST['StreetName']) && !empty($_POST['StreetNumber']) && !empty($_POST['PostalCode'])&& !empty($_POST['Country'])) { 
                 $StreetName = $_POST['StreetName'];
                 $StreetNumber = $_POST['StreetNumber'];

@@ -16,12 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashed_password = password_hash($UserPassword, PASSWORD_DEFAULT);
         if (password_verify(htmlspecialchars($UserPassword), htmlspecialchars($hashed_password))) {
             global $pdo;
-            $stmt = $pdo->prepare("SELECT Id,isAdmin,userName FROM user WHERE userEmail = ?");
+            $stmt = $pdo->prepare("SELECT UserId,UserAdmin,UserName FROM user WHERE userEmail = ?");
             $stmt->execute([htmlspecialchars($UserEmail)]);
             $data = $stmt->fetchAll();
-            $_SESSION['UserId'] = $data[0]['Id'];
-            $_SESSION['UserName'] = $data[0]['userName'];
-            $_SESSION['IsAdmin'] = $data[0]['isAdmin'];
+            $_SESSION['UserId'] = $data[0]['UserId '];
+            $_SESSION['UserName'] = $data[0]['UserName'];
+            $_SESSION['IsAdmin'] = $data[0]['UserAdmin'];
             header("Location: success.php");
         }
     }

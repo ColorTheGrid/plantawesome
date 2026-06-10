@@ -2,8 +2,15 @@
 session_start();
 include 'config.php';
 if ($_SESSION['cart'] && $_SESSION['UserId']) {   
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $isEmpty = false;
+        foreach ($_POST as $key => $value) {
+            if ($value === "") {
+                $isEmpty = true;
+            }
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        }
+            if ($isEmpty === false) {
             $StreetName = $_POST['StreetName'];
             $StreetNumber = $_POST['StreetNumber'];
             $PostalCode = $_POST['PostalCode'];
@@ -15,6 +22,8 @@ if ($_SESSION['cart'] && $_SESSION['UserId']) {
             $stmt = $pdo->prepare("UPDATE user SET StreetNumber=?, PostalCode=?,  WHERE UserId=?");
             $stmt->execute([htmlspecialchars($StreetNumber), htmlspecialchars($PostalCode), htmlspecialchars()]);
             header("Location: finalise-order.php");
+            }
+        }
  ?>
         <!DOCTYPE html>
         <html>

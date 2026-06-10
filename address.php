@@ -22,7 +22,7 @@ if ($_SESSION['cart'] && $_SESSION['UserId']) {
             $stmt = $pdo->prepare("UPDATE user SET StreetNumber=?, PostalCode=?,  WHERE UserId=?");
             $stmt->execute([htmlspecialchars($StreetNumber), htmlspecialchars($PostalCode), htmlspecialchars()]);
             header("Location: finalise-order.php");
-            }
+            
         }
  ?>
         <!DOCTYPE html>

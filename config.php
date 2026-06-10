@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$db = 'plantstore';
+$db = 'plantdatabase';
 $user = 'root';
 $pass = '';
 $port = "3306";

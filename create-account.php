@@ -16,19 +16,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashed_password = password_hash($UserPassword, PASSWORD_DEFAULT);
 
         global $pdo;
-        $stmt = $pdo->prepare("SELECT userEmail FROM user WHERE userEmail =?");
+        $stmt = $pdo->prepare("SELECT UserEmail  FROM user WHERE UserEmail  =?");
         $stmt->execute([htmlspecialchars($UserEmail)]); 
         $data = $stmt->fetch();
         
         if(!$data) {
-            $stmt = $pdo->prepare("INSERT INTO user (isAdmin, userEmail, userName, userPassword) VALUES (?,?,?,?)");
+            $stmt = $pdo->prepare("INSERT INTO user (UserAdmin, UserEmail, UserName, UserPassword) VALUES (?,?,?,?)");
             $stmt->execute([0, htmlspecialchars($UserEmail), htmlspecialchars($UserName), htmlspecialchars($hashed_password)]);   
-            $stmt = $pdo->prepare("SELECT Id,isAdmin FROM user WHERE userName = ?");
+            $stmt = $pdo->prepare("SELECT UserId ,UserAdmin FROM user WHERE UserName = ?");
             $stmt->execute([htmlspecialchars($UserName)]);
             $data = $stmt->fetchAll();
-            $_SESSION['UserId'] = $data[0]['Id'];
+            $_SESSION['UserId'] = $data[0]['UserId'];
             $_SESSION['UserName'] = $UserName;
-            $_SESSION['IsAdmin'] = $data[0]['isAdmin'];
+            $_SESSION['UserAdmin'] = $data[0]['UserAdmin'];
             $create = true;
             header("Location: success.php");
         } else {

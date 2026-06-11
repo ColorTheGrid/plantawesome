@@ -19,7 +19,7 @@
             <a class="header-a" href="log-in.php">Login</a>
             <a class="header-a" href="create-account.php">Create Account</a>
         <?php } ?>
-        <?php if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) { ?>
+        <?php if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) { ?>
             <a class="header-a" href="admin.php">Admin</a>
         <?php } ?>
     </p>

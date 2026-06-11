@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data = $stmt->fetchAll();
             $_SESSION['UserId'] = $data[0]['UserId '];
             $_SESSION['UserName'] = $data[0]['UserName'];
-            $_SESSION['IsAdmin'] = $data[0]['UserAdmin'];
+            $_SESSION['UserAdmin'] = $data[0]['UserAdmin'];
             header("Location: success.php");
         }
     }

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'config.php';
-if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
+if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) {
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

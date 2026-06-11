@@ -31,7 +31,7 @@ if ($_SESSION['cart']) {
     <?php
    global $pdo;
    foreach (($_SESSION['cart']) as $cart) {
-       $stmt = $pdo->prepare("SELECT * FROM item WHERE Id=?");
+       $stmt = $pdo->prepare("SELECT * FROM items WHERE ItemId=?");
        $stmt->execute([htmlspecialchars($cart)]);
        $data = $stmt->fetchAll(); ?>
        <?php foreach ($data as $row) { ?>

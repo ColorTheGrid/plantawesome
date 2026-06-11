@@ -17,13 +17,13 @@ if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
                 $UserName = $_POST['UserName'];
                 $UserPassword = $_POST['UserPassword'];
     
-                $stmt = $pdo->prepare("SELECT userEmail FROM user WHERE userEmail =?");
+                $stmt = $pdo->prepare("SELECT UserEmail FROM user WHERE UserEmail =?");
                 $stmt->execute([htmlspecialchars($UserEmail)]); 
                 $data = $stmt->fetch();
                 
                 if(!$data) {
                     $hashed_password = password_hash($UserPassword, PASSWORD_DEFAULT);
-                    $stmt = $pdo->prepare("INSERT INTO user (isAdmin, userEmail, userName, userPassword) VALUES (?,?,?,?)");
+                    $stmt = $pdo->prepare("INSERT INTO user (UserAdmin, UserEmail, UserName, UserPassword) VALUES (?,?,?,?)");
                     $stmt->execute([1, htmlspecialchars($UserEmail), htmlspecialchars($UserName), htmlspecialchars($hashed_password)]);
                     header("Location: success.php");
                     }
@@ -32,18 +32,12 @@ if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
                 }
             }
 
-        if ($ButtonValue > 0) { 
-                $stmt = $pdo->prepare("SELECT stock FROM item Where Id = ?");
-                $stmt->execute([htmlspecialchars($ButtonValue)]);
-                $data = $stmt->fetch();
-                if($data['stock'] === 1 ) {
-                    $stmt = $pdo->prepare("UPDATE item SET Stock = 0 WHERE Id = ?");
-                    $stmt->execute([htmlspecialchars($ButtonValue)]);
-    
-                } else {
-                    $stmt = $pdo->prepare("UPDATE item SET Stock = 1 WHERE Id = ?");
-                    $stmt->execute([htmlspecialchars($ButtonValue)]);
-                }
+        if ($ButtonValue === 1) { 
+                $ItemId = $_POST['ItemId'];
+                $StockAmount = $_POST['StockAmount'];
+
+                $stmt = $pdo->prepare("UPDATE items SET ItemInStock = ? WHERE ItemId = ?");
+                $stmt->execute([htmlspecialchars($StockAmount), htmlspecialchars($ItemId)]);
                 if($stmt)  {
                     header("Location: success.php");
                 } else {
@@ -96,12 +90,11 @@ if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
 // if everything is ok, try to upload file
             } else {
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    if (!empty($_POST['itemDescription']) && !empty($_POST['itemName']) && !empty($_POST['itemPrice'])) {
+                    if (!empty($_POST['itemDescription']) && !empty($_POST['itemPrice'])) {
                         $ItemDescription = $_POST['itemDescription'];
-                        $ItemName = $_POST['itemName'];
                         $ItemPrice = $_POST['itemPrice'];
-                        $stmt = $pdo->prepare("INSERT INTO item (stock, itemName, itemDescription, itemPrice, itemImg) VALUES (?,?,?,?,?)");
-                        $stmt->execute([1, htmlspecialchars($ItemName), htmlspecialchars($ItemDescription), htmlspecialchars($ItemPrice), htmlspecialchars($target_file)]);
+                        $stmt = $pdo->prepare("INSERT INTO items (ItemInStock, ItemDescription, ItemPrice, ItemImg) VALUES (?,?,?,?)");
+                        $stmt->execute([1, htmlspecialchars($ItemDescription), htmlspecialchars($ItemPrice), htmlspecialchars($target_file)]);
                     }
                     header("Location: success.php");
                 } else {
@@ -127,10 +120,6 @@ if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
                 <h2 class="item-header">
                     Add item
                 </h2>
-                <p>
-                    <label for="fname">Item name: </label><br>
-                    <input type="text" id="fname" name="itemName"><br>
-                </p>
                 <p>
                     <label for="lname">Item description: </label><br>
                     <input type="text" id="lname" name="itemDescription"><br>
@@ -166,34 +155,33 @@ if (isset($_SESSION['IsAdmin']) && $_SESSION['IsAdmin'] === 1) {
             <button type="submit" class="button" name="button" value="-1">
                 Add account
             </button>
-            <?php $stmt = $pdo->prepare("SELECT * FROM item");
+            <?php $stmt = $pdo->prepare("SELECT * FROM items");
             $stmt->execute();
             $data = $stmt->fetchAll(); ?>
             <div class="grid-container">
                 <?php foreach ($data as $row) { ?>
                     <div class="grid-child">
-                        <p><img class="item-image" src="./<?php echo $row['itemImg']; ?>" alt="<?php echo $row['itemImg']; ?>" width="150"
+                        <p><img class="item-image" src="./<?php echo $row['ItemImg']; ?>" alt="<?php echo $row['ItemImg']; ?>" width="150"
                                 height="150"> <br></p>
-                        <p> <?php echo $row['itemName']; ?> <br></p>
-                        <p>€ <?php echo $row['itemPrice']; ?> <br></p>
-                        <p> <?php echo $row['itemDescription']; ?> <br></p>
+                        <p>€ <?php echo $row['ItemDescription']; ?> <br></p>
+                        <p> <?php echo $row['ItemPrice']; ?> <br></p>
                         <p>
-                        <?php if($row['stock'] === 1) { ?>
-                            <button type="submit" class="button" name="button" value="<?php echo $row['Id']; ?>"> Set out Stock
+                            <label for="lname">Stock amount: </label><br></p>
+                        <p>
+                            <input type="hidden" id="lname" name="ItemId" value="<?php echo $row['ItemId']; ?>">
+                        </p>
+                        
+                            <input type="number" id="lname" name="StockAmount" value=""><br>
+                        <p>
+                            <button type="submit" class="button" name="button" value="1"> Set stock
                             </button>
-                            <br></p>
-                        <?php } else { ?>
-                            <button type="submit" class="button" name="button" value="<?php echo $row['Id']; ?>"> Set back in stock
-                            </button>
-                            <br></p>
-                        <?php }?>
+                        </p>
                 </div>
                 <?php } ?>
             </div>
             <p>
                 <button type="submit" class="button" name="button" value="-2"> Next page
                 </button>
-                <br>
             </p>
         </form>
         <div class="push"></div>

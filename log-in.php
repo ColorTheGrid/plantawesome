@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $pdo->prepare("SELECT UserId,UserAdmin,UserName FROM user WHERE userEmail = ?");
             $stmt->execute([htmlspecialchars($UserEmail)]);
             $data = $stmt->fetchAll();
-            $_SESSION['UserId'] = $data[0]['UserId '];
+            $_SESSION['UserId'] = $data[0]['UserId'];
             $_SESSION['UserName'] = $data[0]['UserName'];
             $_SESSION['UserAdmin'] = $data[0]['UserAdmin'];
             header("Location: success.php");

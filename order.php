@@ -17,13 +17,16 @@ if ($_SESSION['UserId']) { ?>
             <div class="order-container">
                 <?php
                 global $pdo;
-                $stmt = $pdo->prepare("SELECT orderUserId, orderItemId FROM orders WHERE orderUserId =? ORDER BY orderId DESC;");
+                $stmt = $pdo->prepare("SELECT OrderId  FROM orders WHERE UserId = ? ORDER BY OrderId DESC;");
                 $stmt->execute([htmlspecialchars($_SESSION['UserId'])]);
                 $data = $stmt->fetchAll(); ?>
                 <?php foreach ($data as $order) { ?>
                     <?php
-                    $stmt = $pdo->prepare("SELECT itemName, itemPrice, itemImg FROM item WHERE Id =? ");
-                    $stmt->execute([htmlspecialchars($order['orderItemId'])]);
+                    $stmt = $pdo->prepare("SELECT ItemId FROM orders_items WHERE OrderId = ?;");
+                    $stmt->execute([htmlspecialchars($order['OrderId'])]);
+                    $data = $stmt->fetchAll(); 
+                    $stmt = $pdo->prepare("SELECT ItemDescription, ItemPrice, ItemImg FROM items WHERE ItemId  =? ");
+                    $stmt->execute([htmlspecialchars($order['ItemId'])]);
                     $data = $stmt->fetchAll(); ?>
 
                     <?php foreach ($data as $row) { ?>

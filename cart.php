@@ -12,8 +12,10 @@ if ($_SESSION['cart']) {
         } else {
             unset($_SESSION['cart']);
             header("Location: success.php");
-        }
-    } ?>
+        }  
+    }?>
+
+
 
     <!DOCTYPE html>
     <html>
@@ -40,19 +42,19 @@ if ($_SESSION['cart']) {
                 <div class="order-item-list">
                     <div class="order-item-chekcout">
                         <div class="cart-image-wrapper">
-                        <img class="item-image" src="./<?php echo $row['itemImg']; ?>"
-                                alt="<?php echo $row['itemImg']; ?>"
+                        <img class="item-image" src="./<?php echo $row['ItemImg']; ?>"
+                                alt="<?php echo $row['ItemImg']; ?>"
                                 width="75"
                                 height="75"> 
                         </div>
                         <div class="order-item-desc">
                             <p>
-                                <?php echo $row['itemName']; ?> <br>
+                                <?php echo $row['ItemDescription']; ?> <br>
                             </p>
                         </div>
                         <div class="div-block">
                             <div class="text-block"> 
-                                <p>€<?php echo $row['itemPrice']; ?> <br></p>
+                                <p>€<?php echo $row['ItemPrice']; ?> <br></p>
                         </div>
                     </div>
                 </div>

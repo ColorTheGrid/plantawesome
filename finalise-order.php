@@ -4,16 +4,22 @@ include 'config.php';
 if ($_SESSION['cart'] && $_SESSION['UserId']) {
 
     global $pdo;
-    $stmt = $pdo->prepare("SELECT userEmail, userName FROM user WHERE Id=?");
+    $stmt = $pdo->prepare("SELECT UserEmail, UserName FROM user WHERE UserId =?");
     $stmt->execute([$_SESSION['UserId']]);
     $data = $stmt->fetchAll();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (!empty($_POST['ccnum']) && !empty($_POST['ccexp']) && !empty($_POST['cccarname']) && !empty($_POST['cccvv'])) {
         foreach (($_SESSION['cart']) as $cart) {
-            $stmt = $pdo->prepare("INSERT INTO orders (orderUserId, orderItemId) VALUES (?, ?)");
-            $stmt->execute([htmlspecialchars($_SESSION['UserId']),  htmlspecialchars($cart)]);
-        }
+            $stmt = $pdo->prepare("INSERT INTO orders (UserId) VALUES (?)");
+            $stmt->execute([htmlspecialchars($_SESSION['UserId'])]);
+            
+
+            $stmt = $pdo->prepare("SELECT OrderId FROM orders WHERE UserId = ?");
+            $stmt->execute([htmlspecialchars($_SESSION['UserId'])]);
+            $data = $stmt->fetchAll();
+
+            $stmt = $pdo->prepare("INSERT INTO orders_items (OrderId, ItemId ) VALUES (?, ?)");
+            $stmt->execute([htmlspecialchars($data[0]['OrderId']),  htmlspecialchars($cart)]);
         unset($_SESSION['cart']);
         header("Location: order.php");
         }
@@ -31,13 +37,13 @@ if ($_SESSION['cart'] && $_SESSION['UserId']) {
             </h1>
         </div>
         <form action="" method="post" id="nameform">
-            <p> <?php echo $data[0]['userEmail']; ?> <br></p>
-            <p> <?php echo $data[0]['userName']; ?> <br></p>
+            <p> <?php echo $data[0]['UserEmail']; ?> <br></p>
+            <p> <?php echo $data[0]['UserName']; ?> <br></p>
             <?php $itemTotal = 0; ?>
             <div class="order-container">
                 <?php foreach (($_SESSION['cart']) as $cart) { ?>
                 <?php
-                $stmt = $pdo->prepare("SELECT * FROM item WHERE Id=?");
+                $stmt = $pdo->prepare("SELECT * FROM items WHERE ItemId=?");
                 $stmt->execute([htmlspecialchars($cart)]);
                 $data = $stmt->fetchAll();
                     
@@ -47,47 +53,28 @@ if ($_SESSION['cart'] && $_SESSION['UserId']) {
                     <div class="order-item">
                         <div class="order-item-chekcout">
                             <div>
-                                <img class="item-image" src="./<?php echo $row['itemImg']; ?>" alt="<?php echo $row['itemImg']; ?>"
+                                <img class="item-image" src="./<?php echo $row['ItemImg']; ?>" alt="<?php echo $row['ItemImg']; ?>"
                                 width="75"
                                 height="75">
                             </div>
                            
                             <div>
-                                <?php echo $row['itemName']; ?> <br>
+                                <?php echo $row['ItemDescription']; ?> <br>
                             </div>
                                         
                             <div>
-                                €<?php echo $row['itemPrice']; 
-                                $itemTotal += $row['itemPrice'];
+                                €<?php echo $row['ItemPrice']; 
+                                $itemTotal += $row['ItemPrice'];
                                 ?> 
                             </div>
                         </div>
                     </div>
                 <?php } ?>
             <?php } ?>
-            <p>
-                Order total: € 
-                <?php echo $itemTotal ?>
-            </p>
-            </div>
-            <div class="checkout-container">
                 <p>
-                    <label for="fname">Credit card number </label><br>
-                    <input type="text" id="fname" name="ccnum"><br>
+                    Order total: € 
+                    <?php echo $itemTotal ?>
                 </p>
-                <p>
-                    <label for="lname">Experition date </label><br>
-                    <input type="text" id="lname" name="ccexp"><br>
-                </p>
-                <p>
-                    <label for="lname">Cardholder name </label><br>
-                    <input type="text" id="lname" name="cccarname"><br>
-                </p>
-                <p>
-                    <label for="lname">CVV code </label><br>
-                    <input type="text" id="lname" name="cccvv"><br>
-                </p>
-            </div>
                 <p>
                     <button type="submit" class="button" name="button" value="">
                         Finalize
@@ -95,6 +82,7 @@ if ($_SESSION['cart'] && $_SESSION['UserId']) {
                     <br>
                 </p>
             </div>
+            
         </form>
         <div class="push"></div>
     </div>

@@ -20,7 +20,7 @@ if ($_SESSION['cart'] && $_SESSION['UserId']) {
             $stmt = $pdo->prepare("INSERT INTO addresses (PostalCode , StreetNumber, StreetName, Country) VALUES (?.?.?.?)");
             $stmt->execute([htmlspecialchars($_SESSION['UserId']), htmlspecialchars($PostalCode), htmlspecialchars($StreetNumber), htmlspecialchars($StreetName), htmlspecialchars($Country)]);
             $stmt = $pdo->prepare("UPDATE user SET StreetNumber=?, PostalCode=?,  WHERE UserId=?");
-            $stmt->execute([htmlspecialchars($StreetNumber), htmlspecialchars($PostalCode), htmlspecialchars()]);
+            $stmt->execute([htmlspecialchars($StreetNumber), htmlspecialchars($PostalCode), htmlspecialchars($_SESSION['UserId'])]);
             header("Location: finalise-order.php");
             
         }

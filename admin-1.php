@@ -7,7 +7,7 @@ if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ButtonValue = $_POST['button'];
         global $pdo;
-        $stmt = $pdo->prepare("DELETE FROM orders WHERE orderId = ?");
+        $stmt = $pdo->prepare("DELETE FROM orders WHERE OrderId = ?");
         $stmt->execute([htmlspecialchars($ButtonValue)]);
         header("Location: success.php");
     } ?>
@@ -20,16 +20,16 @@ if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) {
     <div class="center wrapper">
         <form action="" method="post" id="nameform">
             <?php
-            $stmt = $pdo->prepare("SELECT orderId, orderUserId, orderItemId FROM orders");
+            $stmt = $pdo->prepare("SELECT OrderId, ItemId FROM orders_items");
             $stmt->execute();
             $data = $stmt->fetchAll(); ?>
             <?php foreach ($data as $order) { ?>
                 <?php
-                $stmt = $pdo->prepare("SELECT itemName, itemDescription, itemPrice, itemImg FROM item WHERE Id =?");
-                $stmt->execute([htmlspecialchars($order['orderItemId'])]);
+                $stmt = $pdo->prepare("SELECT ItemDescription, ItemPrice, ItemImg FROM items WHERE ItemId =?");
+                $stmt->execute([htmlspecialchars($order['OrderId'])]);
                 $data = $stmt->fetchAll(); ?>
                 <p>
-                    <button type="submit" class="button" name="button" value="<?php echo $order['orderId']; ?>">
+                    <button type="submit" class="button" name="button" value="<?php echo $order['OrderId']; ?>">
                         Delete order
                     </button>
                     <br>
@@ -52,22 +52,30 @@ if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) {
                     </div>
 
 
-                <?php }
-                $stmt = $pdo->prepare("SELECT streetName, streetNumber, streetPostalCode, country FROM useraddress WHERE userId =?");
-                $stmt->execute([htmlspecialchars($order['orderUserId'])]);
-                $data = $stmt->fetchAll(); ?>
-                <?php foreach ($data
+                <?php }                  
+                $stmt = $pdo->prepare("SELECT UserId  FROM orders WHERE OrderId =?");
+                $stmt->execute([htmlspecialchars($order['OrderId'])]);
+                $data = $stmt->fetchAll();
 
-                               as $row) { ?>
+                $stmt = $pdo->prepare("SELECT StreetNumber,PostalCode FROM user WHERE UserId =?");
+                $stmt->execute([htmlspecialchars($data[0]['UserId'])]);
+                $data = $stmt->fetchAll(); 
+
+                $stmt = $pdo->prepare("SELECT StreetNumber, PostalCode, Country, StreetName FROM addresses WHERE StreetNumber = ? AND PostalCode = ?");
+                $stmt->execute([$data[0]['StreetNumber'],$data[0]['PostalCode']]);
+                $data = $stmt->fetchAll(); 
+                ?>
+                
+                <?php foreach ($data as $row) { ?>
                     <div class="small-border">
                         <h2 class="item-header">
                             Order information
                         </h2>
                         <p>Shipped to</p>
-                        <p> <?php echo $row['streetName']; ?> <br></p>
-                        <p> <?php echo $row['streetNumber']; ?> <br></p>
-                        <p> <?php echo $row['streetPostalCode']; ?> <br></p>
-                        <p> <?php echo $row['country']; ?> <br></p>
+                        <p> <?php echo $row['StreetName']; ?> <br></p>
+                        <p> <?php echo $row['StreetNumber']; ?> <br></p>
+                        <p> <?php echo $row['PostalCode']; ?> <br></p>
+                        <p> <?php echo $row['Country']; ?> <br></p>
                     </div>
                 <?php } ?>
             <?php } ?>

@@ -112,23 +112,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form action="" method="post" id="nameform">
                     <div class="grid-container">
                         <?php foreach ($data as $row) {
-                            if($row['stock'] === 1) { ?>
+                            if($row['ItemInStock'] > 0) { ?>
                             <div class="grid-child">
                                 <div class="container">
-                                    <a href="product.php?id=<?php echo urlencode($row['Id']); ?>"><img class="animation-image" src="./<?php echo $row['itemImg']; ?>"
-                                            alt="<?php $row['itemImg']; ?>" width="200"
+                                    <a href="product.php?id=<?php echo urlencode($row['ItemId']); ?>"><img class="animation-image" src="./<?php echo $row['ItemImg']; ?>"
+                                            alt="<?php $row['ItemImg']; ?>" width="200"
                                             height="250"></a>
                                             <div class="caption">
                                                 <h1>Quality products</h1>
                                             </div>
                                 </div>
 
-                                <p> <?php echo $row['itemDescription']; ?> <br></p>
-                                <p> <?php echo $row['itemName']; ?> <br></p>
-                                <p>€ <?php echo $row['itemPrice']; ?> <br></p>
+                                <p> <?php echo $row['ItemDescription']; ?> <br></p>
+                                <p>€ <?php echo $row['ItemPrice']; ?> <br></p>
                                 <p>
                                     <button type="submit" class="button" name="button"
-                                            value="<?php echo $row['Id']; ?>"> Add to
+                                            value="<?php echo $row['ItemId']; ?>"> Add to
                                         cart
                                     </button>
                                     <br></p>

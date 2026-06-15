@@ -25,8 +25,9 @@ if ($_SESSION['UserId']) { ?>
                     $stmt = $pdo->prepare("SELECT ItemId FROM orders_items WHERE OrderId = ?;");
                     $stmt->execute([htmlspecialchars($order['OrderId'])]);
                     $data = $stmt->fetchAll(); 
+
                     $stmt = $pdo->prepare("SELECT ItemDescription, ItemPrice, ItemImg FROM items WHERE ItemId  =? ");
-                    $stmt->execute([htmlspecialchars($order['ItemId'])]);
+                    $stmt->execute([htmlspecialchars($data[0]['ItemId'])]);
                     $data = $stmt->fetchAll(); ?>
 
                     <?php foreach ($data as $row) { ?>
@@ -36,19 +37,14 @@ if ($_SESSION['UserId']) { ?>
                             <div class="order-item-list">
                                 <div class="order-item-chekcout">
                                     <div class="cart-image-wrapper">
-                                        <p> <img  class="item-image" src="./<?php echo $row['itemImg']; ?>" alt="<?php echo $row['itemImg']; ?>"
+                                        <p> <img  class="item-image" src="./<?php echo $row['ItemImg']; ?>" alt="<?php echo $row['ItemImg']; ?>"
                                             width="75"
                                             height="75"> <br>
                                         </p>
                                     </div>
-                                    <div class="order-item-desc">
-                                        <p>
-                                            <?php echo $row['itemName']; ?> <br>
-                                        </p>
-                                    </div>
                                     <div class="div-block">
                                         <div class="text-block"> 
-                                            <p>€<?php echo $row['itemPrice']; ?> <br></p>
+                                            <p>€<?php echo $row['ItemPrice']; ?> <br></p>
                                     </div>
                                 </div>
                             </div>

@@ -42,9 +42,11 @@ if ($_SESSION['UserId']) { ?>
                                             height="75"> <br>
                                         </p>
                                     </div>
+                                     <div class="div-block">
+                                        <p><?php echo $row['ItemDescription']; ?> <br></p>
+                                    </div>
                                     <div class="div-block">
-                                        <div class="text-block"> 
-                                            <p>€<?php echo $row['ItemPrice']; ?> <br></p>
+                                        <p>€<?php echo $row['ItemPrice']; ?> <br></p>
                                     </div>
                                 </div>
                             </div>

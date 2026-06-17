@@ -9,6 +9,8 @@ if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) {
         global $pdo;
         $stmt = $pdo->prepare("DELETE FROM orders WHERE OrderId = ?");
         $stmt->execute([htmlspecialchars($ButtonValue)]);
+        $stmt = $pdo->prepare("DELETE FROM orders_items WHERE OrderId = ?");
+        $stmt->execute([htmlspecialchars($ButtonValue)]);
         header("Location: success.php");
     } ?>
 
@@ -26,7 +28,7 @@ if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) {
             <?php foreach ($data as $order) { ?>
                 <?php
                 $stmt = $pdo->prepare("SELECT ItemDescription, ItemPrice, ItemImg FROM items WHERE ItemId =?");
-                $stmt->execute([htmlspecialchars($order['OrderId'])]);
+                $stmt->execute([htmlspecialchars($order['ItemId'])]);
                 $data = $stmt->fetchAll(); ?>
                 <p>
                     <button type="submit" class="button" name="button" value="<?php echo $order['OrderId']; ?>">
@@ -42,25 +44,24 @@ if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) {
 
                 <?php foreach ($data as $row) { ?>
                     <p>
-                        <img class="item-image" src="./<?php echo $row['itemImg']; ?>"
-                             alt="<?php echo $row['itemImg']; ?>"
+                        <img class="item-image" src="./<?php echo $row['ItemImg']; ?>"
+                             alt="<?php echo $row['ItemImg']; ?>"
                              width="150"
                              height="150"> <br></p>
-                    <p> <?php echo $row['itemName']; ?> <br></p>
-                    <p>€ <?php echo $row['itemPrice']; ?> <br></p>
-                    <p> <?php echo $row['itemDescription']; ?> <br></p>
+                    <p>€ <?php echo $row['ItemPrice']; ?> <br></p>
+                    <p> <?php echo $row['ItemDescription']; ?> <br></p>
                     </div>
 
 
                 <?php }                  
-                $stmt = $pdo->prepare("SELECT UserId  FROM orders WHERE OrderId =?");
+                $stmt = $pdo->prepare("SELECT UserId FROM orders WHERE OrderId =?");
                 $stmt->execute([htmlspecialchars($order['OrderId'])]);
                 $data = $stmt->fetchAll();
 
                 $stmt = $pdo->prepare("SELECT StreetNumber,PostalCode FROM user WHERE UserId =?");
                 $stmt->execute([htmlspecialchars($data[0]['UserId'])]);
                 $data = $stmt->fetchAll(); 
-
+            
                 $stmt = $pdo->prepare("SELECT StreetNumber, PostalCode, Country, StreetName FROM addresses WHERE StreetNumber = ? AND PostalCode = ?");
                 $stmt->execute([$data[0]['StreetNumber'],$data[0]['PostalCode']]);
                 $data = $stmt->fetchAll(); 

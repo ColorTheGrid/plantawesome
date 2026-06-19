@@ -17,22 +17,22 @@ if ($_SESSION['UserId']) { ?>
             <div class="order-container">
                 <?php
                 global $pdo;
-                $stmt = $pdo->prepare("SELECT OrderId  FROM orders WHERE UserId = ? ORDER BY OrderId DESC;");
+                $stmt = $pdo->prepare("SELECT OrderId  FROM orders WHERE UserId = ? ORDER BY OrderId DESC");
                 $stmt->execute([htmlspecialchars($_SESSION['UserId'])]);
                 $data = $stmt->fetchAll(); ?>
                 <?php foreach ($data as $order) { ?>
                     <?php
-                    $stmt = $pdo->prepare("SELECT ItemId FROM orders_items WHERE OrderId = ?;");
+                    $stmt = $pdo->prepare("SELECT ItemId FROM orders_items WHERE OrderId = ?");
                     $stmt->execute([htmlspecialchars($order['OrderId'])]);
                     $data = $stmt->fetchAll(); 
 
-                    $stmt = $pdo->prepare("SELECT ItemDescription, ItemPrice, ItemImg FROM items WHERE ItemId  =? ");
+                    $stmt = $pdo->prepare("SELECT ItemDescription, ItemPrice, ItemImg FROM items WHERE ItemId  =?");
                     $stmt->execute([htmlspecialchars($data[0]['ItemId'])]);
                     $data = $stmt->fetchAll(); ?>
 
                     <?php foreach ($data as $row) { ?>
                 
-                        <div class="order-item">
+                    <div class="order-item">
                         <div class="block-content"> 
                             <div class="order-item-list">
                                 <div class="order-item-chekcout">
@@ -42,7 +42,7 @@ if ($_SESSION['UserId']) { ?>
                                             height="75"> <br>
                                         </p>
                                     </div>
-                                     <div class="div-block">
+                                        <div class="div-block">
                                         <p><?php echo $row['ItemDescription']; ?> <br></p>
                                     </div>
                                     <div class="div-block">
@@ -53,7 +53,6 @@ if ($_SESSION['UserId']) { ?>
                         </div>
                     </div>
                 <?php } ?>
-            </div>
             <?php } ?>
         </form>
         <div class="push"></div>

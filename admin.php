@@ -47,58 +47,67 @@ if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) {
             }
         
         
-        if ($ButtonValue === 0) {
+       // 1. Check if the form was submitted via the button safely
+        if (isset($_POST['button']) && $_POST['button'] == "0") {
             $target_dir = "img/";
+            
+            // Ensure the file array is populated before accessing it to prevent "Undefined index" notices
+            if (!isset($_FILES["fileToUpload"]) || $_FILES["fileToUpload"]["error"] == UPLOAD_ERR_NO_FILE) {
+                header("Location: error.php");
+                exit;
+            }
+
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-// Check if image file is a actual image or fake image
-            if (isset($_POST["fileToUpload"])) {
-                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-                if ($check !== false) {
-                    $imgOutput = "File is an image - " . $check["mime"] . ".";
-                    $uploadOk = 1;
-                } else {
-                    $imgOutput = "File is not an image.";
-                    $uploadOk = 0;
-                }
+            // 2. Fixed: Check $_FILES instead of $_POST
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if ($check !== false) {
+                $imgOutput = "File is an image - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                $imgOutput = "File is not an image.";
+                $uploadOk = 0;
             }
 
-// Check if file already exists
+            // Check if file already exists
             if (file_exists($target_file)) {
                 $imgOutput = "Sorry, file already exists.";
                 $uploadOk = 0;
             }
 
-// Check file size
+            // Check file size
             if ($_FILES["fileToUpload"]["size"] > 5000000) {
                 $imgOutput = "Sorry, your file is too large.";
                 $uploadOk = 0;
             }
 
-// Allow certain file formats
-            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                && $imageFileType != "gif") {
+            // Allow certain file formats
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
                 $imgOutput = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                 $uploadOk = 0;
             }
 
-// Check if $uploadOk is set to 0 by an error
+            // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == 0) {
                 header("Location: error.php");
-// if everything is ok, try to upload file
+                exit; // Good practice to exit after redirection headers
             } else {
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    if (!empty($_POST['itemDescription']) && !empty($_POST['itemPrice'])) {
-                        $ItemDescription = $_POST['itemDescription'];
-                        $ItemPrice = $_POST['itemPrice'];
+                    if (!empty($_POST['ItemDescription']) && !empty($_POST['ItemPrice'])) {
+                        $ItemDescription = $_POST['ItemDescription'];
+                        $ItemPrice = $_POST['ItemPrice'];
+                        
                         $stmt = $pdo->prepare("INSERT INTO items (ItemInStock, ItemDescription, ItemPrice, ItemImg) VALUES (?,?,?,?)");
+                        // Note: htmlspecialchars is typically used when OUTPUTTING to HTML, not when saving to DB via prepared statements, but kept as per original logic.
                         $stmt->execute([1, htmlspecialchars($ItemDescription), htmlspecialchars($ItemPrice), htmlspecialchars($target_file)]);
                     }
                     header("Location: success.php");
+                    exit;
                 } else {
                     header("Location: error.php");
+                    exit;
                 }
             }
         }
@@ -122,11 +131,11 @@ if (isset($_SESSION['UserAdmin']) && $_SESSION['UserAdmin'] === 1) {
                 </h2>
                 <p>
                     <label for="lname">Item description: </label><br>
-                    <input type="text" id="lname" name="itemDescription"><br>
+                    <input type="text" id="lname" name="ItemDescription"><br>
                 </p>
                 <p>
                     <label for="lname">Item price: </label><br>
-                    <input type="text" id="lname" name="itemPrice"><br>
+                    <input type="text" id="lname" name="ItemPrice"><br>
                 </p>
                 <p>
                     <input type="file" name="fileToUpload">

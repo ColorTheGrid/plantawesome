@@ -75,22 +75,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p> Shipping address</p>
             <p>
                 <label class="label" for="lname">Postal Code: </label><br>
-                <input type="text" class="address-input" id="lname" name="PostalCode"><br>
+                <input type="text" class="" id="lname" name="PostalCode"><br>
             </p>
 
             <p>
                 <label class="label" for="lname">Street number: </label><br>
-                <input type="text" class="address-input" id="lname" name="StreetNumber"><br>
+                <input type="text" class="" id="lname" name="StreetNumber"><br>
             </p>
 
             <p>
                 <label class="label" for="lname">Street name: </label><br>
-                <input type="text" class="address-input" id="lname" name="StreetName"><br>
+                <input type="text" class="" id="lname" name="StreetName"><br>
             </p>
   
             <p>
                 <label class="label" for="lname">Country: </label><br>
-                <input type="text" class="address-input" id="lname" name="Country"><br>
+                <input type="text" class="" id="lname" name="Country"><br>
             </p>
             <button type="submit" class="button" name="button" value="0">
                 Create Account
